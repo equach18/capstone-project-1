@@ -1,0 +1,19 @@
+﻿Capstone Project 1
+Step 1: Initial Project Ideas
+
+
+1. (Spontaneous) Day Planner:
+   1. Possible APIs: Google Maps (Places), Google Calendar, Yelp
+   2. The user will enter location, distance willing to travel, and complete a small form as to what type of day they’d like (relax, touristy, adventurous, random) and the app will randomly populate an itinerary. The user will be able to edit the itinerary times and location. When they are done, they will be able to export it to their google calendar. 
+   3. There will be another tab for one activity instead of planning out the whole day, which the user can also add to their calendar. They will be able to choose from food or activities and the app will generate a random location.
+2. Grocery Organizer and Recipes:
+   1. Possible APIs: Google Cloud Vision, Edamam, Google Calendar
+   2. App will allow a user to take a picture of their groceries, which will be processed by the API. The information will be stored into our database. The user will be able to see all of the ingredients they have at home and the date it was purchased. The items can be sorted and deleted. 
+   3. The app will have another tab that will allow users to see all of the possible recipes that can be made with the ingredients that they currently have. 
+   4. Another possible feature would be incorporating Google Calendar to send reminders to discard expired items
+3. Vaccination Tracker
+   1. Possible APIs: CDC, Google Calendar
+   2. App will list all current and common vaccines. The user can click on them to learn more information. The user can also log the dates of their last vaccines and reminders will be populated on Google Calendar for when they need to get their next dosage. 
+4. Medicine Tracker
+   1. Possible APIs: CDC, Google Calendar
+   2. App will provide features: Logging medication into a database, medication pick-up reminders, and information about the medicine
