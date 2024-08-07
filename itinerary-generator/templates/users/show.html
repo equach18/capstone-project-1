@@ -1,0 +1,35 @@
+{% extends 'base.html' %} 
+{% block body_class %}profile{% endblock %} 
+{% block content %}
+<div class="row">
+  <div class="col-2 profile-container">
+    <img src="{{user.image_url}}" class="img-thumbnail img-fluid" alt="profile picture" />
+    <h5>{{user.username}}</h5>
+  </div>
+
+  <div class="col-10">
+    <div class="d-flex justify-content-end">
+        <a class="btn btn-primary" id="new-itinerary-btn" href="/new-itinerary" role="button">Create An Itinerary</a>
+    </div>
+    {% if user.itineraries %}
+    <ul class="list-group" id="itineraries">
+      {% for itinerary in user.itineraries %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div class="itinerary-info">
+          <a href="" class="itinerary-title">{{ itinerary.title }}</a>
+          <p class="single-itineraries">{{ itinerary.notes }}</p>
+          <small class="text-muted">{{ itinerary.timestamp.strftime('%d %B %Y') }}</small>
+        </div>
+        <div class="d-flex">
+          <a class="btn btn-secondary" href="" role="button">Edit</a>
+          <a class="btn btn-danger" href="" role="button">Delete</a>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <h2>No existing Spontineraries yet.</h2>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

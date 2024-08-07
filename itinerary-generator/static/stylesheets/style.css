@@ -1,0 +1,194 @@
+/* #f26749
+#fcded6
+#83a5f2
+#204ecf
+#ea9836 */
+
+/* general */
+body {
+  font-family:"Roboto Condensed", sans-serif;
+  background: rgb(131,165,242);
+  background: linear-gradient(0deg, rgba(131,165,242,1) 0%, rgba(32,78,207,0.3) 100%);
+  background-size: cover;
+  background-repeat: no-repeat; 
+  background-attachment: fixed; 
+}
+
+.btn:hover {
+  cursor: pointer;
+}
+
+.navbar {
+  background-color: #83a5f2;
+  min-height: 1vh;
+}
+
+.navbar-brand {
+  color: #f26749;
+  font-family: "Shrikhand", serif;
+}
+
+.form-inline {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.navbar-nav .nav-link {
+  color: #030712;
+  font-family: "Oswald", serif;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #122232;
+}
+
+.form-inline .form-control {
+  width: 200px;
+}
+
+.form-inline .btn-outline-success {
+  color: #284c6d;
+  border-color: #284c6d;
+}
+
+.form-inline .btn-outline-success:hover {
+  background-color: #284c6d;
+  color: #ffffff;
+}
+
+.navbar-nav .nav-item .nav-link {
+  padding: .5rem 1rem;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+}
+
+.navbar-nav .btn-primary {
+  background-color: #4173b0;
+  border-color: #284c6d;
+}
+
+.navbar-nav .btn-primary:hover {
+  background-color: #284c6d;
+}
+
+.navbar-nav .btn-light {
+  background-color: #f8f9fa;
+  border-color: #f8f9fa;
+}
+
+.navbar-nav .btn-light:hover {
+  background-color: #e2e6ea;
+  border-color: #dae0e5;
+}
+
+
+
+/* homepage */
+h1{
+  text-align: center;
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+
+.img-container {
+  padding-top: 40px; 
+}
+
+.home-img{
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 0 10px;
+  padding:0;
+}
+
+.grid-item{
+  padding:5px;
+}
+
+.home-img img {
+  width: 100%;
+  height: 280px; 
+  object-fit: cover; 
+}
+
+.link-container{
+  text-align: center;
+  padding-top: 25px
+}
+
+.link-container .btn {
+  padding: 15px 60px; 
+  font-size: 20px; 
+  border-radius: 50px; 
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  width:auto;
+}
+
+
+/* user forms  */
+.user-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-form .form-control {
+  margin-bottom: 20px;
+  padding: 15px; 
+  font-size: 19px; 
+  height: auto;
+  box-shadow:0 1px 2px 1px;
+}
+
+.user-form .btn {
+  border-radius: 50px;
+  width:50%;
+  padding: 15px 30px;
+  font-size: 19px;
+  font-family: "Oswald", serif;
+  text-transform:uppercase;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  letter-spacing:.1em;
+}
+
+/* profile page */
+.profile .container{
+  padding-left:0;
+  margin-left: 0;
+}
+.profile-container{
+  padding:30px;
+  background: rgb(131,165,242);
+  min-height: 99vh;
+  height: 100%;
+}
+
+.profile-container h5{
+  padding-top: 10px;
+  text-align: center;
+}
+
+#itineraries .btn{
+  margin-left: 5px;
+}
+
+#new-itinerary-btn{
+  border-radius: 50px;
+  width:40%;
+  padding: 15px 20px;
+  font-size: 19px;
+  font-family: "Oswald", serif;
+  text-transform:uppercase;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  letter-spacing:.1em;
+  margin-top: 30px;
+  margin-bottom: 20px
+}
+

@@ -1,0 +1,29 @@
+{% extends 'base.html' %} 
+{% block body_class %}home{% endblock %}
+{% block content %}
+
+<h1>Plan Your Day With Spontinerary!</h1>   
+<div class="img-container">
+  <div class="row justify-content-center">
+    <div class="col-md-4 grid-item">
+      <div class="home-img">
+        <img src="/static/images/unsplash-1.jpg" alt="Image 1" />
+      </div>
+    </div>
+    <div class="col-md-4 grid-item">
+      <div class="home-img">
+        <img src="/static/images/unsplash-2.jpg" alt="Image 2" />
+      </div>
+    </div>
+    <div class="col-md-4 grid-item">
+      <div class="home-img">
+        <img src="/static/images/unsplash-3.jpg" alt="Image 3" />
+      </div>
+    </div>
+  </div>
+</div>
+<div class="link-container">
+  <a href="{{url_for('login')}}" class="btn btn-secondary">Login</a>
+  <a href="{{url_for('signup')}}" class="btn btn-primary">Sign Up</a>
+</div>
+{% endblock %}
