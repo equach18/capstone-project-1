@@ -18,8 +18,4 @@ class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[Length(min=6)])
     
-class ItineraryAddForm(FlaskForm):
-    """Form for user to create a new itinerary"""
-    title = StringField('Title', validators=[DataRequired()])
-    location = StringField('Location', validators=[DataRequired()])
-    notes = TextAreaField('(Optional) Notes')
+

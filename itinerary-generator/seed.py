@@ -25,7 +25,7 @@ with app.app_context():
         title="title1",
         location="Chicago",
         user_id = 1,
-        notes = "note1"
+        notes = "note1",
     )
     db.session.add(i1)
     db.session.commit()

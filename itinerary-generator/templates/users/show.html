@@ -1,5 +1,5 @@
 {% extends 'base.html' %} 
-{% block body_class %}profile{% endblock %} 
+{% block body_class %}itinerary-container{% endblock %} 
 {% block content %}
 <div class="row">
   <div class="col-2 profile-container">
@@ -28,7 +28,7 @@
       {% endfor %}
     </ul>
     {% else %}
-    <h2>No existing Spontineraries yet.</h2>
+    <h3 class="text-center">No existing Spontineraries yet.</h3>
     {% endif %}
   </div>
 </div>
