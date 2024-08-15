@@ -116,12 +116,14 @@ def create_itinerary():
         # Retrieve the user inputs.
         title = request.form['title']
         location = request.form['location']
+        radius = request.form['radius']
         notes = request.form.get('notes')
         
         new_itinerary=Itinerary(
             title = title,
             location = location,
             notes = notes or None,
+            radius=radius,
             user_id = g.user.id
         )
         db.session.add(new_itinerary)
@@ -130,11 +132,22 @@ def create_itinerary():
 
     return render_template('itinerary/new.html', api_key=GOOGLE_MAPS_API_KEY)
     
+    
 @app.route('/itinerary/<int:itinerary_id>')
+@login_required
 def show_itinerary(itinerary_id):
     """Renders the itinerary page where it lists the activities if there are any"""
-    
+    # query the selected itinerary
     itinerary = Itinerary.query.get(itinerary_id)
     
     return render_template('itinerary/show.html', itinerary=itinerary)
     
+    
+@app.route('/itinerary/<int:itinerary_id>/new', methods=["POST", "GET"])
+@login_required
+def add_activities(itinerary_id):
+    """Add activities to the itinerary"""
+    itinerary = Itinerary.query.get(itinerary_id)
+    
+    # Renders the new activity form upon a get request
+    return render_template('itinerary/activity.html', itinerary=itinerary)

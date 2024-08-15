@@ -1,5 +1,5 @@
 {% extends 'base.html' %} 
-{% block body_class %}itinerary-container{% endblock %} 
+{% block body_class %}profile{% endblock %} 
 {% block content %}
 <div class="row">
   <div class="col-2 profile-container">
@@ -16,7 +16,7 @@
       {% for itinerary in user.itineraries %}
       <li class="list-group-item d-flex justify-content-between align-items-center">
         <div class="itinerary-info">
-          <a href="" class="itinerary-title">{{ itinerary.title }}</a>
+          <a href="{{url_for('show_itinerary', itinerary_id=itinerary.id)}}" class="itinerary-title">{{ itinerary.title }}</a>
           <p class="single-itineraries">{{ itinerary.notes }}</p>
           <small class="text-muted">{{ itinerary.timestamp.strftime('%d %B %Y') }}</small>
         </div>

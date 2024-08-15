@@ -60,6 +60,7 @@ class Itinerary(db.Model):
     location = db.Column(db.String, nullable=False)
     timestamp = db.Column(db.DateTime, nullable=False, default=func.now())
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
+    radius = db.Column(db.Integer, nullable=False)
     notes = db.Column(db.Text)
     
     def add_activities(self, activities):
