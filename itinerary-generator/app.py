@@ -3,11 +3,13 @@ import os
 
 load_dotenv()
 
-from flask import Flask, render_template, request, flash, redirect, session, g, url_for
+from flask import Flask, render_template, request, flash, redirect, session, g, url_for, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 from functools import wraps
 from sqlalchemy.exc import IntegrityError
 from googleplaces import GooglePlaces, types, lang
+import random
+import requests
 
 from models import connect_db, db, User, Itinerary, Activity
 from forms import UserAddForm, LoginForm
@@ -57,6 +59,53 @@ def do_logout():
     if CURR_USER_KEY in session:
         del session[CURR_USER_KEY]
         
+def getLongLat(address):
+    """Returns the longitude and latitude of the given address"""
+    response = requests.get("https://maps.googleapis.com/maps/api/geocode/json", params={'address':address, 'key': GOOGLE_MAPS_API_KEY})
+    data = response.json()
+    
+    if response.status_code == 200 and data['status'] == 'OK':
+        # Get the latitude and longitude from the response
+        location = data['results'][0]['geometry']['location']
+        latitude = location['lat']
+        longitude = location['lng']
+        return latitude, longitude
+    else:
+        raise Exception(f"Error getting geocode: {data['status']}")
+        
+def process_activities(itinerary, categories):
+    """Processes the categories given by the user to return random activities"""
+    for category in categories:
+    # Make a request to Google Places API
+        location = getLongLat(itinerary.location)
+        location_str = f"{location[0]},{location[1]}"
+        resp = requests.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json', params={
+            'location': location_str,  # Location should be in 'lat,lng' format
+            'radius': itinerary.radius,  # Define the search radius in meters
+            'keyword': category,  # Use the activity category as the place type
+            'key': GOOGLE_MAPS_API_KEY
+        })
+        
+        if resp.status_code != 200:
+            raise Exception(f"Google Places API error: {resp.status_code}")
+                            
+        places = resp.json().get('results', [])
+        if places:
+            # Randomly select a place from the results
+            selected_place = random.choice(places)
+            
+            # Create a new Activity object and save it to the database
+            new_activity = Activity(
+                title = selected_place['name'],
+                itinerary_id=itinerary.id, # Associate with the current itinerary
+                user_id=itinerary.user_id,
+                category=category,
+                address=selected_place['vicinity']
+            )
+            db.session.add(new_activity)
+    
+    # Commit the changes to save all activities
+    db.session.commit()
 
 # routes
 @app.route('/')
@@ -116,14 +165,14 @@ def create_itinerary():
         # Retrieve the user inputs.
         title = request.form['title']
         location = request.form['location']
-        radius = request.form['radius']
+        radius = request.form['radius'] 
         notes = request.form.get('notes')
         
         new_itinerary=Itinerary(
             title = title,
             location = location,
             notes = notes or None,
-            radius=radius,
+            radius= int(radius) * 1000,
             user_id = g.user.id
         )
         db.session.add(new_itinerary)
@@ -149,5 +198,16 @@ def add_activities(itinerary_id):
     """Add activities to the itinerary"""
     itinerary = Itinerary.query.get(itinerary_id)
     
+    if request.method == 'POST':
+        #  make a list of all the categories from the user inputs 
+        categories = request.json.get('categories', [])
+        
+        if not categories:
+            return jsonify({"error": "Please select at least one activity category."}), 400
+        
+        process_activities(itinerary, categories)
+        return jsonify({"message": "Activities added successfully", "redirect_url": f"/itinerary/{itinerary_id}"})
+    
     # Renders the new activity form upon a get request
     return render_template('itinerary/activity.html', itinerary=itinerary)
+
