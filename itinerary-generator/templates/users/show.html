@@ -21,8 +21,9 @@
           <small class="text-muted">{{ itinerary.timestamp.strftime('%d %B %Y') }}</small>
         </div>
         <div class="d-flex">
-          <a class="btn btn-secondary" href="" role="button">Edit</a>
-          <a class="btn btn-danger" href="" role="button">Delete</a>
+          <form action="{{url_for('itinerary_delete', itinerary_id=itinerary.id)}}" method="POST">
+            <button class="btn btn-danger">X</button>
+          </form>
         </div>
       </li>
       {% endfor %}

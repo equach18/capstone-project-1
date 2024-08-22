@@ -211,3 +211,45 @@ def add_activities(itinerary_id):
     # Renders the new activity form upon a get request
     return render_template('itinerary/activity.html', itinerary=itinerary)
 
+@app.route('/logout')
+@login_required
+def logout():
+    """Logs the user out"""
+    do_logout()
+    flash("You have successfully logged out.")
+    return redirect("/")
+
+
+@app.route('/activity/<int:activity_id>/delete', methods=["POST"])
+@login_required
+def activity_delete(activity_id):
+    """Deletes the activity"""
+    activity = Activity.query.get_or_404(activity_id)
+    itinerary_id = activity.itinerary_id
+    
+    # ensures that another user cannot delete another user's activity
+    if activity.user_id != g.user.id:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+
+    db.session.delete(activity)
+    db.session.commit()
+    flash("Activity removed.")
+    return redirect(f"/itinerary/{itinerary_id}")
+
+@app.route('/itinerary/<int:itinerary_id>/delete', methods=["POST"])
+@login_required
+def itinerary_delete(itinerary_id):
+    """Deletes the itinerary"""
+    itinerary = Itinerary.query.get_or_404(itinerary_id)
+    
+    # ensures that another user cannot delete another user's itinerary
+    if itinerary.user_id != g.user.id:
+        flash("Access unauthorized.", "danger")
+        return redirect("/")
+
+    db.session.delete(itinerary)
+    db.session.commit()
+    flash("Itinerary removed.")
+    return redirect("/")
+    
