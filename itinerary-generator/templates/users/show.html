@@ -17,7 +17,12 @@
       <li class="list-group-item d-flex justify-content-between align-items-center">
         <div class="itinerary-info">
           <a href="{{url_for('show_itinerary', itinerary_id=itinerary.id)}}" class="itinerary-title">{{ itinerary.title }}</a>
-          <p class="single-itineraries">{{ itinerary.notes }}</p>
+          <p>
+          {% if itinerary.notes %}
+          {{ itinerary.notes }}
+          {% endif %}
+          </p>
+          <small>Activity Count: {{itinerary.activities|length}},</small>
           <small class="text-muted">Created on {{ itinerary.timestamp.strftime('%d %B %Y') }}</small>
         </div>
         <div class="d-flex">

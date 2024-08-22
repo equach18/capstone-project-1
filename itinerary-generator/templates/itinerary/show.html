@@ -2,30 +2,32 @@
 {% block body_class %}itinerary details{% endblock %} 
 {% block content %}
 <h1>{{ itinerary.title }}</h1>
-
-<div class="col">
-    <div class="d-flex justify-content-end">
-        <a class="btn btn-primary" href="{{url_for('add_activities', itinerary_id=itinerary.id)}}" role="button">Add Activities!</a>
+<div class="d-flex justify-content-center">
+  <div class="col-9">
+      <div class="d-flex justify-content-end">
+          <a class="btn btn-primary" href="{{url_for('add_activities', itinerary_id=itinerary.id)}}" role="button">Add Activities!</a>
+      </div>
+      {% if itinerary.activities %}
+      <ul class="list-group">
+        {% for activity in itinerary.activities %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <div class="itinerary-info">
+            <a href="{{activity.activity_url}}" class="activity-title">{{ activity.title }}</a>
+            <p>{% if activity.summary %}<i>{{activity.summary}}</i>{% endif %}</p>
+            <p class="single-itineraries">Location: {{ activity.address }}</p>
+            <small><p class="single-itineraries">Category: {{ activity.category }}</p></small>
+          </div>
+          <div class="d-flex">
+            <form action="{{url_for('activity_delete', activity_id=activity.id)}}" method="POST">
+              <button class="btn btn-danger">X</button>
+            </form>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <h3 class="text-center">Create your first activity for this Spontinerary!</h3>
+      {% endif %}
     </div>
-    {% if itinerary.activities %}
-    <ul class="list-group">
-      {% for activity in itinerary.activities %}
-      <li class="list-group-item d-flex justify-content-between align-items-center">
-        <div class="itinerary-info">
-          <a href="{{activity.activity_url}}" class="activity-title">{{ activity.title }}</a>
-          <p class="single-itineraries">Location: {{ activity.address }}</p>
-          <small><p class="single-itineraries">Category: {{ activity.category }}</p></small>
-        </div>
-        <div class="d-flex">
-          <form action="{{url_for('activity_delete', activity_id=activity.id)}}" method="POST">
-            <button class="btn btn-danger">X</button>
-          </form>
-        </div>
-      </li>
-      {% endfor %}
-    </ul>
-    {% else %}
-    <h3 class="text-center">Create your first activity for this Spontinerary!</h3>
-    {% endif %}
-  </div>
+</div>
 {% endblock %}

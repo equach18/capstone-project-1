@@ -25,6 +25,7 @@
       <div class="container-fluid">
         <a class="navbar-brand" href="{{url_for('homepage')}}">Spontinerary</a>
         <div class="navbar-collapse" id="navbarSupportedContent">
+          {% if g.user %}
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
               <a class="nav-link" aria-current="page" href="{{url_for('homepage')}}">Home</a>
@@ -33,6 +34,7 @@
               <a class="nav-link" href="{{url_for('show_activities')}}">My Activities</a>
             </li>
           </ul>
+          {% endif %}
         </div>
         <ul class="navbar-nav">
           {% if not g.user %}

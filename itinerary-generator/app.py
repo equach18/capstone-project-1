@@ -30,6 +30,9 @@ app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', "it's a secret")
 toolbar = DebugToolbarExtension(app)
 
 connect_db(app)
+with app.app_context():
+    db.drop_all()
+    db.create_all()
 
 @app.before_request
 def add_user_to_g():
@@ -80,9 +83,9 @@ def process_activities(itinerary, categories):
         location = getLongLat(itinerary.location)
         location_str = f"{location[0]},{location[1]}"
         resp = requests.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json', params={
-            'location': location_str,  # Location should be in 'lat,lng' format
-            'radius': itinerary.radius,  # Define the search radius in meters
-            'keyword': category,  # Use the activity category as the place type
+            'location': location_str,  
+            'radius': itinerary.radius,  
+            'keyword': category, 
             'key': GOOGLE_MAPS_API_KEY
         })
         
@@ -93,6 +96,13 @@ def process_activities(itinerary, categories):
         if places:
             # Randomly select a place from the results
             selected_place = random.choice(places)
+            # retrieve the details of the selected place
+            details_resp = requests.get('https://maps.googleapis.com/maps/api/place/details/json', params={
+                'place_id': selected_place['place_id'],
+                'key': GOOGLE_MAPS_API_KEY
+            })
+            
+            place_details = details_resp.json().get('result', {})
             
             # Create a new Activity object and save it to the database
             new_activity = Activity(
@@ -100,7 +110,9 @@ def process_activities(itinerary, categories):
                 itinerary_id=itinerary.id, # Associate with the current itinerary
                 user_id=itinerary.user_id,
                 category=category,
-                address=selected_place['vicinity']
+                address=selected_place['vicinity'],
+                activity_url=place_details.get('url', None),
+                summary=place_details.get('editorial_summary', {}).get('overview', None)
             )
             db.session.add(new_activity)
     
@@ -250,7 +262,6 @@ def itinerary_delete(itinerary_id):
 
     db.session.delete(itinerary)
     db.session.commit()
-    flash("Itinerary removed.")
     return redirect("/")
     
     

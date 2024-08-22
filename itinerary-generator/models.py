@@ -82,7 +82,8 @@ class Activity(db.Model):
     title = db.Column(db.String(100), nullable=False)
     category = db.Column(db.String(20), nullable=False)
     activity_url = db.Column(db.String)
-    address = db.Column(db.Text)
+    address = db.Column(db.String)
+    summary = db.Column(db.Text)
     
 
 def connect_db(app):
