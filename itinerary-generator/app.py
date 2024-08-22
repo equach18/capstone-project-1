@@ -109,7 +109,7 @@ def process_activities(itinerary, categories):
 
 # routes
 @app.route('/')
-def root():
+def homepage():
     """Renders the homepage."""
     if g.user:
         return render_template('users/show.html', user=g.user)
@@ -209,7 +209,7 @@ def add_activities(itinerary_id):
         return jsonify({"message": "Activities added successfully", "redirect_url": f"/itinerary/{itinerary_id}"})
     
     # Renders the new activity form upon a get request
-    return render_template('itinerary/activity.html', itinerary=itinerary)
+    return render_template('activity/new.html', itinerary=itinerary)
 
 @app.route('/logout')
 @login_required
@@ -253,3 +253,10 @@ def itinerary_delete(itinerary_id):
     flash("Itinerary removed.")
     return redirect("/")
     
+    
+@app.route('/activity/all', methods=['GET'])
+@login_required
+def show_activities():
+    """Renders a list of all the current user's activities"""
+    activities = Activity.query.filter(Activity.user_id==g.user.id)
+    return render_template('/activity/show.html', activities=activities)

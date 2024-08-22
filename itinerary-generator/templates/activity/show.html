@@ -1,0 +1,39 @@
+{% extends 'base.html' %} {% block body_class %}activity details{% endblock %}
+{% block content %}
+<h1>All Activities</h1>
+<div class="d-flex justify-content-center">
+
+    <div class="col-9">
+      {% if activities %}
+      <ul class="list-group">
+        {% for activity in activities %}
+        <li
+          class="list-group-item d-flex justify-content-between align-items-center"
+        >
+          <div>
+            <a href="{{activity.activity_url}}" class="activity-title"
+              >{{ activity.title }}</a
+            >
+            <p class="single-itineraries">Location: {{ activity.address }}</p>
+            <small>
+              <span>
+                Category: {{ activity.category }}, Itinerary: 
+                <a
+                  href="{{url_for('show_itinerary', itinerary_id=activity.itinerary_id)}}"
+                  >{{activity.itinerary.title}}</a
+                >
+              </span>
+            </small>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <h3 class="text-center">
+        You currently don't have any activities planned. Create an itinerary to
+        start adding activities!
+      </h3>
+      {% endif %}
+    </div>
+</div>
+{% endblock %}
