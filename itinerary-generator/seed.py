@@ -26,7 +26,7 @@ with app.app_context():
         location="Chicago",
         user_id = 1,
         notes = "note1",
-        radius = 5
+        radius = 15
     )
     db.session.add(i1)
     db.session.commit()
