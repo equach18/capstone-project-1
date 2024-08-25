@@ -1,11 +1,10 @@
 """User model tests."""
 
-#    python -m unittest test_user_model.py
+#    python3 -m unittest test/test_user_model.py
 
 
 import os
 from unittest import TestCase
-from werkzeug.exceptions import BadRequest
 from sqlalchemy import exc
 
 from models import db, User, Activity, Itinerary, bcrypt
@@ -20,7 +19,7 @@ db.create_all()
 
 
 class UserModelTestCase(TestCase):
-    """Test views for User."""
+    """Test the User model."""
 
     def setUp(self):
         """Create test client, add sample data."""
