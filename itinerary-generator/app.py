@@ -163,6 +163,7 @@ def signup():
             return render_template('users/signup.html', form=form)
         # When the user successfully registers, then log them in and redirect to their homepage.
         do_login(user)
+        flash(f"Hello, {user.username}!", "success")
         return redirect('/')
     # Upon a get request, render the signup form
     return render_template('users/signup.html', form=form)
