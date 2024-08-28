@@ -62,7 +62,7 @@ def do_logout():
     if CURR_USER_KEY in session:
         del session[CURR_USER_KEY]
         
-def getLongLat(address):
+def get_long_lat(address):
     """Returns the longitude and latitude of the given address"""
     response = requests.get("https://maps.googleapis.com/maps/api/geocode/json", params={'address':address, 'key': GOOGLE_MAPS_API_KEY})
     data = response.json()
@@ -80,7 +80,7 @@ def process_activities(itinerary, categories):
     """Processes the categories given by the user to return random activities"""
     for category in categories:
     # Make a request to Google Places API
-        location = getLongLat(itinerary.location)
+        location = get_long_lat(itinerary.location)
         location_str = f"{location[0]},{location[1]}"
         resp = requests.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json', params={
             'location': location_str,  
@@ -168,7 +168,7 @@ def signup():
     # Upon a get request, render the signup form
     return render_template('users/signup.html', form=form)
 
-@app.route('/new-itinerary', methods=["POST", "GET"])
+@app.route('/itinerary/new', methods=["POST", "GET"])
 # Ensures that a user is logged in before creating an itinerary.
 @login_required
 def create_itinerary():
@@ -181,16 +181,25 @@ def create_itinerary():
         radius = request.form['radius'] 
         notes = request.form.get('notes')
         
-        new_itinerary=Itinerary(
-            title = title,
-            location = location,
-            notes = notes or None,
-            radius= int(radius) * 1000,
-            user_id = g.user.id
-        )
-        db.session.add(new_itinerary)
-        db.session.commit()
-        return redirect(f"/itinerary/{new_itinerary.id}")
+        # Make sure that all of the required inputs are filled out
+        if not title or not location or not radius:
+            flash("Please fill in the required fields", 'danger')
+            return render_template('itinerary/new.html', api_key=GOOGLE_MAPS_API_KEY)
+        
+        try:
+            new_itinerary=Itinerary(
+                title = title,
+                location = location,
+                notes = notes or None,
+                radius= int(radius) * 1000,
+                user_id = g.user.id
+            )
+            db.session.add(new_itinerary)
+            db.session.commit()
+            return redirect(f"/itinerary/{new_itinerary.id}")
+        except IntegrityError:
+            db.session.rollback()
+            flash("Invalid Inputs", 'danger')
 
     return render_template('itinerary/new.html', api_key=GOOGLE_MAPS_API_KEY)
     
@@ -209,7 +218,12 @@ def show_itinerary(itinerary_id):
 @login_required
 def add_activities(itinerary_id):
     """Add activities to the itinerary"""
-    itinerary = Itinerary.query.get(itinerary_id)
+    itinerary = Itinerary.query.get_or_404(itinerary_id)
+    
+    # ensure that users cannot add activities to itineraries that is not theirs
+    if itinerary.user_id != g.user.id:
+        flash("Access unauthorized. You cannot add to another user's itinerary.", "danger")
+        return redirect("/")
     
     if request.method == 'POST':
         #  make a list of all the categories from the user inputs 
