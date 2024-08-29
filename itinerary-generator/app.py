@@ -21,12 +21,12 @@ google_places = GooglePlaces(GOOGLE_MAPS_API_KEY)
 app = Flask(__name__)
 app.app_context().push()
 
-app.config['SQLALCHEMY_DATABASE_URI'] = (os.environ.get('DATABASE_URL', 'postgresql:///spontinerary'))
+app.config['SQLALCHEMY_DATABASE_URI'] = (os.environ.get('SUPABASE_DB_URL', 'postgresql:///spontinerary'))
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = True
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', "it's a secret")
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 toolbar = DebugToolbarExtension(app)
 
 connect_db(app)
