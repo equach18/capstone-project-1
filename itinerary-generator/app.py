@@ -12,7 +12,7 @@ import random
 import requests
 
 from .models import connect_db, db, User, Itinerary, Activity
-from forms import UserAddForm, LoginForm
+from .forms import UserAddForm, LoginForm
 
 CURR_USER_KEY = "curr_user"
 GOOGLE_MAPS_API_KEY = os.getenv('GOOGLE_MAPS_API_KEY')
