@@ -1,32 +1,49 @@
-{% extends 'base.html' %} 
-{% block body_class %}profile{% endblock %} 
-{% block content %}
-<div class="row">
-  <div class="col-2 profile-container">
-    <img src="{{user.image_url}}" class="img-thumbnail img-fluid" alt="profile picture" />
+{% extends 'base.html' %} {% block body_class %}profile{% endblock %} {% block
+content %}
+<div class="row justify-content-md-center">
+  <div class="col-2" id="user-box">
+    <img
+      src="{{user.image_url}}"
+      class="img-thumbnail img-fluid"
+      alt="profile picture"
+    />
     <h5>{{user.username}}</h5>
   </div>
 
-  <div class="col-9">
+  <div class="col" id="itinerary-box">
+    <h2 >Itineraries</h2>
     <div class="d-flex justify-content-end">
-        <a class="btn btn-primary" id="new-itinerary-btn" href="/new-itinerary" role="button">Create An Itinerary</a>
+      <a
+        class="btn btn-primary"
+        id="new-itinerary-btn"
+        href="{{url_for('create_itinerary')}}"
+        role="button"
+        >Create a New Itinerary</a
+      >
     </div>
     {% if user.itineraries %}
     <ul class="list-group" id="itineraries">
       {% for itinerary in user.itineraries %}
-      <li class="list-group-item d-flex justify-content-between align-items-center">
+      <li
+        class="list-group-item d-flex justify-content-between align-items-center"
+      >
         <div class="itinerary-info">
-          <a href="{{url_for('show_itinerary', itinerary_id=itinerary.id)}}" class="itinerary-title">{{ itinerary.title }}</a>
-          <p>
-          {% if itinerary.notes %}
-          {{ itinerary.notes }}
-          {% endif %}
-          </p>
+          <a
+            href="{{url_for('show_itinerary', itinerary_id=itinerary.id)}}"
+            class="itinerary-title"
+            >{{ itinerary.title }}</a
+          >
+          <p>{% if itinerary.notes %} {{ itinerary.notes }} {% endif %}</p>
           <small>Activity Count: {{itinerary.activities|length}},</small>
-          <small class="text-muted">Created on {{ itinerary.timestamp.strftime('%d %B %Y') }}</small>
+          <small class="text-muted"
+            >Created on {{ itinerary.timestamp.strftime('%d %B %Y') }}</small
+          >
         </div>
         <div class="d-flex">
-          <form action="{{url_for('itinerary_delete', itinerary_id=itinerary.id)}}" method="POST">
+          <form
+            action="{{url_for('itinerary_delete', itinerary_id=itinerary.id)}}"
+            method="POST"
+          >
             <button class="btn btn-danger">X</button>
           </form>
         </div>

@@ -1,12 +1,15 @@
 // Categories for the activities
 ACTIVITY_CAT = [
-  "Random",
   "Food",
   "Hiking",
   "Tours",
   "Shopping",
   "Adventure",
   "Outdoors",
+  "Culture",
+  "Relaxation",
+  "Music",
+  "Fitness"
 ];
 const BASE_URL = "http://127.0.0.1:5000/";
 

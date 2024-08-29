@@ -1,9 +1,9 @@
-{% extends 'base.html' %} {% block body_class %}activity-container{% endblock %}
+{% extends 'base.html' %} {% block body_class %}act{% endblock %}
 {% block content %}
 
-<h1>Add Activities to {{itinerary.title}}</h1>
 <div class="row justify-content-md-center">
   <div class="col-md-7 col-lg-5">
+    <h1>Add Activities to {{itinerary.title}}</h1>
     <form class="" id="activity-count-form" action="#" method="POST">
       <div class="form-group">
         <label for="activity-count"
@@ -22,7 +22,7 @@
     </form>
     <form id="activity-form">
         <div id="activity-input-container"></div>
-        <button class="btn btn-primary" id="add-activity-btn">Add Activities!</button>
+        <button class="btn btn-primary" id="add-act-btn">Add!</button>
     </form>
   </div>
 </div>

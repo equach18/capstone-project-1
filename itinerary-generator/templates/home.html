@@ -1,29 +1,59 @@
-{% extends 'base.html' %} 
-{% block body_class %}home{% endblock %}
-{% block content %}
+{% extends 'base.html' %} {% block body_class %}home{% endblock %} {% block
+content %}
 
-<h1>Plan Your Day With Spontinerary!</h1>   
-<div class="img-container">
-  <div class="row justify-content-center">
-    <div class="col-md-4 grid-item">
-      <div class="home-img">
-        <img src="/static/images/unsplash-1.jpg" alt="Image 1" />
+  <div class="row justify-content-center w-100 v-100">
+    <div class="col-md-4 d-flex flex-column justify-content-center">
+      <h1>Plan Your Day With Spontinerary!</h1>
+      <p>
+        Discover the thrill of spontaneous adventures with Spontinerary! Whether
+        you're craving a relaxing day, an adrenaline-pumping adventure, or a
+        touristy exploration, Spontinerary curates the perfect day for you.
+      </p>
+      <div class="btn-gp">
+        <a href="{{url_for('login')}}" class="btn btn-secondary">Login</a>
+        <a href="{{url_for('signup')}}" class="btn btn-primary">Sign Up</a>
       </div>
     </div>
-    <div class="col-md-4 grid-item">
-      <div class="home-img">
-        <img src="/static/images/unsplash-2.jpg" alt="Image 2" />
+    <div class="col-md-4">
+      <!-- flipping image code from https://www.w3schools.com/howto/howto_css_flip_image.asp -->
+      <div class="flip-box" id="hp-img1">
+        <div class="flip-box-inner">
+          <div class="flip-box-front">
+            <img
+              src="/static/images/unsplash-1.jpg"
+              alt="Girl exploring wilderness"
+            />
+          </div>
+          <div class="flip-box-back">
+            <p>Explore new places.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-box" id="hp-img2">
+        <div class="flip-box-inner">
+          <div class="flip-box-front">
+            <img src="/static/images/unsplash-2.jpg" alt="coffee making" />
+          </div>
+          <div class="flip-box-back">
+            <p>Try new foods.</p>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="col-md-4 grid-item">
-      <div class="home-img">
-        <img src="/static/images/unsplash-3.jpg" alt="Image 3" />
+
+    <div class="col-md-4">
+      <div class="flip-box" id="hp-img3">
+        <div class="flip-box-inner">
+          <div class="flip-box-front">
+            <img src="/static/images/unsplash-3.jpg" alt="travel sign" />
+          </div>
+          <div class="flip-box-back">
+            <p>The world is your playground.</p>
+          </div>
+        </div>
       </div>
-    </div>
   </div>
 </div>
-<div class="link-container">
-  <a href="{{url_for('login')}}" class="btn btn-secondary">Login</a>
-  <a href="{{url_for('signup')}}" class="btn btn-primary">Sign Up</a>
-</div>
+
 {% endblock %}

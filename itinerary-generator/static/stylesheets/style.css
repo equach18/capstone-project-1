@@ -1,140 +1,152 @@
-/* #f26749
-#fcded6
-#83a5f2
-#204ecf
-#ea9836 */
-
 /* general */
+:root {
+  --primary-bg-color: #f8f1e5;
+  --accent-color: #dd9057;
+  --highlight-bg-color: #ccd7d9;
+  --text-color: #2c3e50;
+  --light-green: #ced882;
+  --dark-green: #266e43;
+  --light-orange: #fed881;
+}
+
 body {
-  font-family:"Roboto Condensed", sans-serif;
-  background: rgb(131,165,242);
-  background: linear-gradient(0deg, rgba(131,165,242,1) 0%, rgba(32,78,207,0.3) 100%);
-  background-size: cover;
-  background-repeat: no-repeat; 
-  background-attachment: fixed; 
+  font-family: "Roboto Condensed", sans-serif;
+  background: var(--primary-bg-color);
+  color: var(--text-color);
 }
 
 .btn:hover {
   cursor: pointer;
 }
 
-/* nav */
 .navbar {
-  background-color: #83a5f2;
   min-height: 1vh;
+  padding: 12px 50px;
 }
 
 .navbar-brand {
-  color: #f26749;
+  color: var(--accent-color);
   font-family: "Shrikhand", serif;
 }
 
-.form-inline {
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
+.navbar-nav .nav-link {
+  font-family: "Oswald", serif;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
-.navbar-nav .nav-link {
-  color: #030712;
-  font-family: "Oswald", serif;
-  text-transform:uppercase;
-  letter-spacing:.1em;
+.navbar-brand:hover {
+  color: #d57d3a;
 }
 
 .navbar-nav .nav-link:hover {
   color: #122232;
 }
 
-.form-inline .form-control {
-  width: 200px;
+#logout-btn {
+  background-color: var(--light-orange);
 }
 
-.form-inline .btn-outline-success {
-  color: #284c6d;
-  border-color: #284c6d;
+/* general forms */
+.form-inline {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
 }
 
-.form-inline .btn-outline-success:hover {
-  background-color: #284c6d;
-  color: #ffffff;
+.form-control {
+  width: 450px;
 }
 
-.navbar-nav .nav-item .nav-link {
-  padding: .5rem 1rem;
-  text-transform:uppercase;
-  letter-spacing:.1em;
+/* general buttons */
+.btn {
+  border-radius: 20px;
+  font-family: "Oswald", serif;
+  text-transform: uppercase;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  letter-spacing: 0.1em;
+  margin: 2px;
 }
 
-.navbar-nav .btn-primary {
-  background-color: #4173b0;
-  border-color: #284c6d;
+/* flip container code from https://www.w3schools.com/howto/howto_css_flip_image.asp and modified */
+
+/* The flip box container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
+.flip-box {
+  background-color: transparent;
+  width: 280px;
+  perspective: 1000px; /* Remove this if you don't want the 3D effect */
 }
-
-.navbar-nav .btn-primary:hover {
-  background-color: #284c6d;
-}
-
-.navbar-nav .btn-light {
-  background-color: #f8f9fa;
-  border-color: #f8f9fa;
-}
-
-.navbar-nav .btn-light:hover {
-  background-color: #e2e6ea;
-  border-color: #dae0e5;
-}
-
-
-
-/* homepage */
-h1{
-  text-align: center;
-  padding-top: 50px;
-  padding-bottom: 20px;
-}
-
-.img-container {
-  padding-top: 40px; 
-}
-
-.home-img{
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  text-align: center;
-  margin-bottom: 30px;
-  padding: 0 10px;
-  padding:0;
-}
-
-.grid-item{
-  padding:5px;
-}
-
-.home-img img {
+#hp-img1,
+#hp-img1 img {
   width: 100%;
-  height: 280px; 
-  object-fit: cover; 
+  height: 250px;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border-radius: 8px;
 }
 
-.link-container{
+#hp-img2,
+#hp-img2 img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+#hp-img3,
+#hp-img3 img {
+  width: 100%;
+  height: 560px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* This container is needed to position the front and back side */
+.flip-box-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
   text-align: center;
-  padding-top: 25px
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
 }
 
-.link-container .btn {
-  padding: 15px 60px; 
-  font-size: 20px; 
-  border-radius: 50px; 
-  text-transform:uppercase;
-  letter-spacing:.1em;
-  width:auto;
+/* Do an horizontal flip when you move the mouse over the flip box container */
+.flip-box:hover .flip-box-inner {
+  transform: rotateY(180deg);
 }
 
+/* Position the front and back side */
+.flip-box-front,
+.flip-box-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden; /* Safari */
+  backface-visibility: hidden;
+}
 
-/* user forms  */
-.user-form {
+/* Style the front side (fallback if image is missing) */
+.flip-box-front {
+  color: black;
+}
+
+/* Style the back side */
+.flip-box-back {
+  transform: rotateY(180deg);
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+}
+
+.home .container {
+  margin-top: 40px;
+}
+
+/* style login and signup form  */
+.user-form,
+.itinerary-form,
+#activity-count-form,
+#activity-form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -142,85 +154,137 @@ h1{
 
 .user-form .form-control {
   margin-bottom: 20px;
-  padding: 15px; 
-  font-size: 19px; 
+  padding: 15px;
+  font-size: 19px;
   height: auto;
-  box-shadow:0 1px 2px 1px;
+  box-shadow: 0 1px 2px 1px;
 }
 
-.user-form .btn {
+.user-form .btn,
+.itinerary-form .btn,
+#add-act-btn {
   border-radius: 50px;
-  width:50%;
-  padding: 15px 30px;
+  width: 50%;
+  padding: 12px 20px;
   font-size: 19px;
   font-family: "Oswald", serif;
-  text-transform:uppercase;
+  text-transform: uppercase;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  letter-spacing:.1em;
+  letter-spacing: 0.1em;
+  margin-top: 20px;
+  background-color: var(--light-green);
+  border: 1px gray;
+  color: var(--text-color);
 }
 
-/* profile page */
-.profile .container{
-  padding-left:0;
-  margin-left: 0;
-}
-.profile-container{
-  padding:30px;
-  background: rgb(131,165,242);
-  min-height: 99vh;
-  height: 100%;
-}
-
-.profile-container h5{
-  padding-top: 10px;
+.onboarding h1 {
   text-align: center;
+  padding-bottom: 20px;
 }
 
-
-#itineraries .btn{
-  margin-left: 5px;
-}
-
-#new-itinerary-btn{
-  border-radius: 50px;
-  width:40%;
-  padding: 15px 20px;
-  font-size: 19px;
-  font-family: "Oswald", serif;
-  text-transform:uppercase;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  letter-spacing:.1em;
-  margin-top: 30px;
-  margin-bottom: 20px
-}
-
-
-/* new itinerary form */
-
-.map-container{
-  width: 200px;
-  width: 100%;
-  height:100%;
+.onboarding .container {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 70vh;
 }
 
-.itinerary-form label{
-  margin-top: 8px;
+.v-center {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.itinerary-form .btn {
-  border-radius: 50px;
-  width:50%;
-  padding: 15px 30px;
-  font-size: 19px;
-  font-family: "Oswald", serif;
-  text-transform:uppercase;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  letter-spacing:.1em;
-  display:block;
-  margin: auto;
+/* user profile page */
+
+.profile .container {
+  height: 75vh;
+  margin-left: 80px;
+  margin-right: 80px;
   margin-top: 20px;
 }
 
+#user-box {
+  background-color: var(--highlight-bg-color);
+  border-radius: 20px;
+  height: 100%;
+  padding: 10px;
+  margin: 10px;
+  text-align: center;
+}
 
+#user-box h5 {
+  margin-top: 30px;
+}
+
+#user-box img {
+  width: 200px;
+  height: auto;
+  object-fit: cover;
+}
+
+#itinerary-box {
+  background-color: var(--highlight-bg-color);
+  border-radius: 20px;
+  height: 100%;
+  padding: 10px 30px;
+  margin: 10px;
+  height: 80vh;
+  margin-right: 70px;
+  max-height: 100%;
+}
+
+.itn h1,
+.act h1 {
+  text-align: center;
+  padding-bottom: 20px;
+  padding-top: 20px;
+}
+
+#itineraries {
+  flex-grow: 1;
+  overflow-y: auto;
+  max-height: calc(100vh - 150px);
+}
+
+.form-group {
+  width: 450px;
+}
+
+h3 {
+  padding: 30px;
+}
+
+/* new itinerary form */
+.map-container {
+  width: 100%;
+}
+
+.itinerary-form label {
+  margin-top: 12px;
+}
+
+/* lists */
+.list-box {
+  /* background-color: var(--light-green); */
+  border-radius: 20px;
+  border: 1px gray;
+  height: 100%;
+  padding: 0px 30px;
+  height: 75vh;
+  max-height: 100%;
+}
+
+.hd-detail {
+  text-align: center;
+}
+
+#new-itinerary-btn,
+#new-act-btn {
+  margin-bottom: 10px;
+  background-color: var(--light-green);
+  color: var(--text-color);
+  border: 1px gray;
+
+}

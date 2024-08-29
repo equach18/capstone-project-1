@@ -2,11 +2,11 @@
 {% block scripts %}
 <script type="module" src="https://unpkg.com/@googlemaps/extended-component-library@0.6"></script>
 {% endblock %}
-{% block body_class %}onboarding{% endblock %}
+{% block body_class %}itn{% endblock %}
 {% block content %}
-<h1>Create a New Itinerary!</h1> 
 <div class="row justify-content-md-center">
-  <div class="col-md-7 col-lg-5">
+  <div class="col-md-8">
+    <h1>Create a New Itinerary!</h1> 
     <form class="itinerary-form" id="itinerary-form" action="{{url_for('create_itinerary')}}" method="POST">
       <div class="form-group">
         <label for="title">Name</label>
@@ -16,11 +16,11 @@
         <label for="location">Location</label>
         <gmpx-api-loader key="{{api_key}}" solution-channel="GMP_GCC_placepicker_v1"></gmpx-api-loader>
         <div class="map-container">
-          <gmpx-place-picker placeholder="Location of your plans"></gmpx-place-picker>
+          <gmpx-place-picker placeholder="Location of your plans" style="width:100%"></gmpx-place-picker>
         </div>
         <input type="hidden" id="location" name="location" required>
       </div>
-      <div>
+      <div class="form-group">
         <label for="radius">Max Travel Distance (1 - 100 km)</label>
         <input type="number" class="form-control" id="radius" name="radius" min="1" max="100" required>
       </div>
