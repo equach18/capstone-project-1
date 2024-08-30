@@ -30,9 +30,6 @@ app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 toolbar = DebugToolbarExtension(app)
 
 connect_db(app)
-with app.app_context():
-    db.drop_all()
-    db.create_all()
 
 @app.before_request
 def add_user_to_g():
@@ -160,6 +157,7 @@ def signup():
             db.session.commit()
         except IntegrityError:
             flash("Invalid Inputs", 'danger')
+            db.session.rollback()
             return render_template('users/signup.html', form=form)
         # When the user successfully registers, then log them in and redirect to their homepage.
         do_login(user)
