@@ -10,10 +10,10 @@ from sqlalchemy.exc import IntegrityError
 from googleplaces import GooglePlaces, types, lang
 import random
 import requests
+from flask_cors import CORS
 
 from .models import connect_db, db, User, Itinerary, Activity
 from .forms import UserAddForm, LoginForm
-
 CURR_USER_KEY = "curr_user"
 GOOGLE_MAPS_API_KEY = os.getenv('GOOGLE_MAPS_API_KEY')
 google_places = GooglePlaces(GOOGLE_MAPS_API_KEY)
@@ -21,6 +21,7 @@ google_places = GooglePlaces(GOOGLE_MAPS_API_KEY)
 app = Flask(__name__)
 app.app_context().push()
 
+CORS(app, resources={r"/*": {"origins": "https://spontinerary.onrender.com"}})
 app.config['SQLALCHEMY_DATABASE_URI'] = (os.environ.get('SUPABASE_DB_URL', 'postgresql:///spontinerary'))
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
