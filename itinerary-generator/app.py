@@ -21,8 +21,12 @@ google_places = GooglePlaces(GOOGLE_MAPS_API_KEY)
 app = Flask(__name__)
 app.app_context().push()
 
+# # comment out the next two lines for unit testing 
 CORS(app, resources={r"/*": {"origins": "https://spontinerary.onrender.com"}})
 app.config['SQLALCHEMY_DATABASE_URI'] = (os.environ.get('SUPABASE_DB_URL', 'postgresql:///spontinerary'))
+
+# uncomment the next line for unit testing 
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///spontinerary'
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = False

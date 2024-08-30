@@ -53,7 +53,7 @@ class UserViewTestCase(TestCase):
         
         response = self.client.get('/login')
         self.assertEqual(response.status_code, 200)
-        self.assertIn(b'Login', response.data)
+        self.assertIn(b'Log In', response.data)
     
     def test_successful_login(self):
         """Tests login with valid credentials."""
@@ -77,7 +77,7 @@ class UserViewTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn(b'Invalid username and/or password', response.data)
         # checks that the login button is still there if login was unsuccessful
-        self.assertIn(b'Login', response.data)
+        self.assertIn(b'Log In', response.data)
     
     def test_signup_page(self):
         """Tests signup page renders correctly upon a get request"""
@@ -139,7 +139,7 @@ class UserViewTestCase(TestCase):
             response = client.get('/logout', follow_redirects=True)
             self.assertEqual(response.status_code, 200)
             self.assertIn(b'You have successfully logged out.', response.data) 
-            self.assertIn(b'Login', response.data)
+            self.assertIn(b'Log In', response.data)
             
         # Verify that the user is no longer logged in
         with client.session_transaction() as sess:
@@ -149,5 +149,5 @@ class UserViewTestCase(TestCase):
         """Tests that the user cannot log out without being logged in."""
         
         response = self.client.get('/logout', follow_redirects=True)
-        self.assertIn(b'Login', response.data) 
+        self.assertIn(b'Log In', response.data) 
         self.assertNotIn(b'You have successfully logged out.', response.data)

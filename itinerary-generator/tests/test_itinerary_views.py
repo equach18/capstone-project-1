@@ -120,7 +120,7 @@ class ItineraryViewTestCase(TestCase):
         with self.client as client:
             response = self.client.get('/itinerary/new', follow_redirects=True)
             self.assertEqual(response.status_code, 200)
-            self.assertIn(b'Login', response.data)
+            self.assertIn(b'Log In', response.data)
             self.assertIn(b'Access unauthorized. Please log in to continue.', response.data)
             
     def test_show_itinerary(self):
@@ -155,7 +155,7 @@ class ItineraryViewTestCase(TestCase):
             response = self.client.get(f"/itinerary/{self.i1_id}")
 
             self.assertEqual(response.status_code, 200)
-            self.assertIn(b'Add Activities!', response.data) 
+            self.assertIn(b'Add Activities', response.data) 
             self.assertIn(self.i1.title.encode('utf-8'), response.data) 
             # check that the activities are rendered
             self.assertIn(a1.title.encode('utf-8'), response.data) 

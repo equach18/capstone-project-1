@@ -1,6 +1,6 @@
 """Itinerary model tests."""
 
-#    python3 -m unittest test/test_itinerary_model.py
+#    python3 -m unittest tests/test_itinerary_model.py
 
 import os
 from unittest import TestCase

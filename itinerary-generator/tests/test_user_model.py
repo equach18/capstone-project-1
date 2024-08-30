@@ -1,6 +1,6 @@
 """User model tests."""
 
-#    python3 -m unittest test/test_user_model.py
+#    python3 -m unittest tests/test_user_model.py
 
 
 import os
