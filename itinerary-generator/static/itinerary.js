@@ -11,7 +11,7 @@ ACTIVITY_CAT = [
   "Music",
   "Fitness"
 ];
-const BASE_URL = "http://127.0.0.1:5000/";
+const BASE_URL = "https://spontinerary.onrender.com";
 
 $(document).ready(function () {
   // Create an event listener on the Google picker to convert the user's input to the formatted address.
