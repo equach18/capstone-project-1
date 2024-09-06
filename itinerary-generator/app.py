@@ -165,7 +165,7 @@ def signup():
             )
             db.session.commit()
         except IntegrityError:
-            flash("Invalid Inputs", 'danger')
+            flash("This username or email already exists", 'danger')
             db.session.rollback()
             return render_template('users/signup.html', form=form)
         # When the user successfully registers, then log them in and redirect to their homepage.
