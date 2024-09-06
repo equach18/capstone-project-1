@@ -12,8 +12,12 @@ import random
 import requests
 from flask_cors import CORS
 
+# the '.' was added to support the website launch on render. For testing or if running the app locally, please comment out the next two lines and uncomment the following two. 
 from .models import connect_db, db, User, Itinerary, Activity
 from .forms import UserAddForm, LoginForm
+# from models import connect_db, db, User, Itinerary, Activity
+# from forms import UserAddForm, LoginForm
+
 CURR_USER_KEY = "curr_user"
 GOOGLE_MAPS_API_KEY = os.getenv('GOOGLE_MAPS_API_KEY')
 google_places = GooglePlaces(GOOGLE_MAPS_API_KEY)

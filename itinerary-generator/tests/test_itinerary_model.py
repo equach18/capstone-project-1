@@ -124,3 +124,103 @@ class ItineraryModelTestCase(TestCase):
 
         self.assertIsNotNone(saved_a1)
         self.assertIsNotNone(saved_a2)
+        
+    def test_missing_title(self):
+        """Tests the that the itinerary raises an exception when the title is not added."""
+        itinerary = Itinerary(
+            location = "some place",
+            user_id = self.user1_id,
+            radius = 20,
+            notes = "a note"
+        )
+        itinerary.id = 88
+        db.session.add(itinerary)
+        with self.assertRaises(Exception):
+            db.session.commit()
+        db.session.commit()
+    
+    def test_missing_title(self):
+        """Tests that the itinerary raises an exception when the title is not added."""
+        itinerary = Itinerary(
+            location = "some place",
+            user_id = self.user1_id,
+            radius = 20,
+            notes = "a note"
+        )
+        itinerary.id = 88
+        db.session.add(itinerary)
+        with self.assertRaises(Exception):
+            db.session.commit()
+            
+    def test_missing_location(self):
+        """Tests that the itinerary raises an exception when the location is not added."""
+        itinerary = Itinerary(
+            title = "test title",
+            user_id = self.user1_id,
+            radius = 20,
+            notes = "a note"
+        )
+        itinerary.id = 903
+        db.session.add(itinerary)
+        with self.assertRaises(Exception):
+            db.session.commit()
+            
+    def test_missing_radius(self):
+        """Tests that the itinerary raises an exception when the radius is not added."""
+        itinerary = Itinerary(
+            title = "test title",
+            location = "some place",
+            user_id = self.user1_id,
+            notes = "a note"
+        )
+        itinerary.id = 993
+        db.session.add(itinerary)
+        with self.assertRaises(Exception):
+            db.session.commit()
+            
+    def test_missing_user(self):
+        """Tests that the itinerary raises an exception when the radius is not added."""
+        itinerary = Itinerary(
+            title = "test title",
+            location = "some place",
+            radius = 20,
+            notes = "a note"
+        )
+        itinerary.id = 555
+        db.session.add(itinerary)
+        with self.assertRaises(Exception):
+            db.session.commit()
+        
+    def test_invalid_user(self):
+        """Tests that the itinerary raises an exception when an invalid user id is used"""
+        itinerary = Itinerary(
+            title = "test title",
+            location = "some place",
+            user_id = 9323423,
+            radius = 87,
+            notes = "a note"
+        )
+        itinerary.id = 23
+        db.session.add(itinerary)
+        with self.assertRaises(Exception):
+            db.session.commit()
+        
+    def test_repr(self):
+        """Tests the repr method"""
+        itinerary = Itinerary(
+            title = "test itinerary",
+            location = "place",
+            user_id = self.user1_id,
+            radius = 20,
+            notes = "to do in some place"
+        )
+        
+        self.itinerary_id = 43
+        itinerary.id = self.itinerary_id
+        
+        db.session.add(itinerary)
+        db.session.commit()
+        
+        
+        repr_str = repr(itinerary)
+        self.assertEqual(repr_str, f"Itinerary(id = {self.itinerary_id}, ownerId = {self.user1_id})")

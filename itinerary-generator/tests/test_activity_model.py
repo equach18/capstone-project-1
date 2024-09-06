@@ -115,16 +115,125 @@ class ActivityModelTestCase(TestCase):
         self.assertIsNotNone(saved_a1)
         self.assertIsNotNone(saved_a2)
 
-def test_optional_fields(self):
-    """Tests the optional fields of the model. Makes sure that data can be added without those fields"""
-    activity = Activity(
-        itinerary_id=self.i1_id,
-        user_id=self.user_id,
-        title='Another test',
-        category='Tours',
-        activity_url=None,
-        address=None    
-    )
-    db.session.add(activity)
-    db.session.commit()
-    self.assertIsNotNone(activity.id)
+    def test_optional_fields(self):
+        """Tests the optional fields of the model. Makes sure that data can be added without those fields"""
+        activity = Activity(
+            itinerary_id=self.i1_id,
+            user_id=self.user_id,
+            title='Another test',
+            category='Tours',
+            activity_url=None,
+            address=None    
+        )
+        db.session.add(activity)
+        db.session.commit()
+        self.assertIsNotNone(activity.id)
+        
+    def test_missing_title(self):
+        """Tests that the activity raises an exception when the title is not added."""
+        activity = Activity(
+            itinerary_id=self.i1_id,
+            user_id=self.user_id,
+            category='Tours',
+            activity_url=None,
+            address=None    
+        )
+        activity.id = 3457
+        db.session.add(activity)
+        with self.assertRaises(Exception):
+            db.session.commit()
+            
+    def test_missing_category(self):
+        """Tests that the activity raises an exception when the category is not added."""
+        activity = Activity(
+            itinerary_id=self.i1_id,
+            user_id = self.user_id,
+            title = "Some activity",
+            activity_url = "test.com",
+            address = "345 imaginary st",
+            summary = "summary"
+        )
+        activity.id = 3457
+        db.session.add(activity)
+        with self.assertRaises(Exception):
+            db.session.commit()
+            
+    def test_missing_itinerary(self):
+        """Tests that the activity raises an exception when the itinerary is not added."""
+        activity = Activity(
+            user_id = self.user_id,
+            title = "Some activity",
+            activity_url = "test.com",
+            category = "tour",
+            address = "345 imaginary st",
+            summary = "summary"
+        )
+        activity.id = 66
+        db.session.add(activity)
+        with self.assertRaises(Exception):
+            db.session.commit()
+            
+    def test_invalid_itinerary(self):
+        """Tests that the activity raises an exception when the itinerary id does not exist"""
+        activity = Activity(
+            itinerary_id = 829357498575,
+            user_id = self.user_id,
+            title = "Some activity",
+            activity_url = "test.com",
+            category = "tour",
+            address = "345 imaginary st",
+            summary = "summary"
+        )
+        activity.id = 9
+        db.session.add(activity)
+        with self.assertRaises(Exception):
+            db.session.commit()
+            
+    def test_missing_user(self):
+        """Tests that the activity raises an exception when the user id is not added."""
+        activity = Activity(
+            itinerary_id=self.i1_id,
+            title = "Some activity",
+            activity_url = "test.com",
+            category = "tour",
+            address = "345 imaginary st",
+            summary = "summary"
+        )
+        activity.id = 66
+        db.session.add(activity)
+        with self.assertRaises(Exception):
+            db.session.commit()
+            
+    def test_invalid_user(self):
+        """Tests that the activity raises an exception when the user id does not exist"""
+        activity = Activity(
+            itinerary_id = self.i1_id,
+            user_id = 856845967,
+            title = "Some activity",
+            activity_url = "test.com",
+            category = "tour",
+            address = "345 imaginary st",
+            summary = "summary"
+        )
+        activity.id = 82
+        db.session.add(activity)
+        with self.assertRaises(Exception):
+            db.session.commit()
+        
+            
+    def test_repr(self):
+        """Tests the repr method"""
+        activity = Activity(
+            itinerary_id = self.i1_id,
+            user_id = self.user_id,
+            title = "Some Restaurant",
+            category = "eats",
+            activity_url = "test.com",
+            address = "123 imaginary st",
+            summary = "summary1"
+        )
+        db.session.add(activity)
+        db.session.commit()
+        repr_str = repr(activity)
+        self.assertEqual(repr_str, f"Activity(id = {activity.id}, ownerId = {activity.user_id}, itineraryId = {activity.itinerary_id})")
+        

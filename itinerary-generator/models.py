@@ -4,6 +4,8 @@ from sqlalchemy.sql import func
 
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.exc import SQLAlchemyError
+from flask import flash
 
 bcrypt = Bcrypt()
 db = SQLAlchemy()
@@ -29,17 +31,21 @@ class User(db.Model):
     @classmethod
     def register(cls, username, email, password, image_url):
         """Registers the user with hashed password and returns the user"""
-        hashed_pwd = bcrypt.generate_password_hash(password).decode('UTF-8')
+        try:
+            hashed_pwd = bcrypt.generate_password_hash(password).decode('UTF-8')
 
-        user = User(
-            username=username,
-            email=email,
-            password=hashed_pwd,
-            image_url=image_url,
-        )
+            user = User(
+                username=username,
+                email=email,
+                password=hashed_pwd,
+                image_url=image_url,
+            )
 
-        db.session.add(user)
-        return user
+            db.session.add(user)
+            return user
+        except SQLAlchemyError as e:
+            db.session.rollback()
+            flash(f"An error occurred: {e}", 'error')
 
     @classmethod
     def authenticate(cls, username, password):
@@ -63,6 +69,9 @@ class Itinerary(db.Model):
     radius = db.Column(db.Integer, nullable=False)
     notes = db.Column(db.Text)
     
+    def __repr__(self):
+        return f"Itinerary(id = {self.id}, ownerId = {self.user_id})"
+    
     def add_activities(self, activities):
         """Add activities into the itinerary"""
         for activity in activities:
@@ -77,13 +86,16 @@ class Activity(db.Model):
     __tablename__ = 'activities'
 
     id = db.Column(db.Integer, primary_key=True)
-    itinerary_id = db.Column(db.Integer, db.ForeignKey('itineraries.id', ondelete='CASCADE'))
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'))
-    title = db.Column(db.String(100), nullable=False)
-    category = db.Column(db.String(20), nullable=False)
+    itinerary_id = db.Column(db.Integer, db.ForeignKey('itineraries.id', ondelete='CASCADE'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete='CASCADE'), nullable=False)
+    title = db.Column(db.String, nullable=False)
+    category = db.Column(db.String, nullable=False)
     activity_url = db.Column(db.String)
     address = db.Column(db.String)
     summary = db.Column(db.Text)
+    
+    def __repr__(self):
+        return f"Activity(id = {self.id}, ownerId = {self.user_id}, itineraryId = {self.itinerary_id})"
     
 
 def connect_db(app):

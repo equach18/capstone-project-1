@@ -187,5 +187,10 @@ class UserModelTestCase(TestCase):
         invalid_user = User.authenticate("user1", "badpassword")
         self.assertFalse(invalid_user)
         
+    def test_repr(self):
+        """Tests the repr method"""
+        repr_str = repr(self.user1)
+        self.assertEqual(repr_str, f"<User #{self.user1.id}: {self.user1.username}>")
+
     
         
